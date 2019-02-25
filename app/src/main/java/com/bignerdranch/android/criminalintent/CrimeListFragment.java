@@ -80,12 +80,21 @@ public class CrimeListFragment extends Fragment {
             mCrimes = crimes;
         }
 
+        @Override
+        public int getItemViewType(int position) {
+            return super.getItemViewType(position);
+        }
 
         @NonNull
         @Override
-        public CrimeHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
+        public CrimeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            return new CrimeHolder(layoutInflater, parent);
+            this.getItemViewType(viewType);
+            switch (viewType){
+                case 0: return new CrimeHolder(layoutInflater, parent);
+                case 1: return new CrimeHolder(layoutInflater, parent);
+                default: return new CrimeHolder(layoutInflater, parent);
+            }
         }
 
         @Override
