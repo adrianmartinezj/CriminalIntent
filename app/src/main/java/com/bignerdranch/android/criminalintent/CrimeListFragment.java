@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,8 +51,8 @@ public class CrimeListFragment extends Fragment {
         private TextView mTitleTextView;
         private TextView mDateTextView;
 
-        public CrimeHolder(LayoutInflater inflater, ViewGroup parent) {
-            super(inflater.inflate(R.layout.list_item_crime, parent, false));
+        public CrimeHolder(LayoutInflater inflater, ViewGroup parent, int viewType) {
+            super(inflater.inflate(viewType, parent, false));
             itemView.setOnClickListener(this);
 
             mTitleTextView = (TextView) itemView.findViewById(R.id.crime_title);
@@ -82,19 +83,18 @@ public class CrimeListFragment extends Fragment {
 
         @Override
         public int getItemViewType(int position) {
-            return super.getItemViewType(position);
+            if (mCrimes.get(position).isRequiresPolice()){
+                return R.layout.list_item_police_crime;
+            } else {
+                return R.layout.list_item_crime;
+            }
         }
 
         @NonNull
         @Override
         public CrimeHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
             LayoutInflater layoutInflater = LayoutInflater.from(getActivity());
-            this.getItemViewType(viewType);
-            switch (viewType){
-                case 0: return new CrimeHolder(layoutInflater, parent);
-                case 1: return new CrimeHolder(layoutInflater, parent);
-                default: return new CrimeHolder(layoutInflater, parent);
-            }
+            return new CrimeHolder(layoutInflater, parent, viewType);
         }
 
         @Override
