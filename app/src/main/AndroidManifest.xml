@@ -16,6 +16,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".CrimeActivity">
+            <intent-filter>
+                <action android:name=".CrimeActivity"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
         </activity>
     </application>
 
